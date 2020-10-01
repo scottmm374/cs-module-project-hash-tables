@@ -95,7 +95,10 @@ class HashTable:
 
         Implement this.
         """
-        self.capacity[self.hash_index(key)] = None
+        if self.capacity[self.hash_index(key)] is None:
+            print("key not found")
+        else:
+            self.capacity[self.hash_index(key)] = None
 
     def get(self, key):
         """
