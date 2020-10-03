@@ -8,6 +8,12 @@ class HashTableEntry:
         self.value = value
         self.next = None
 
+    def __repr__(self):
+        return f"HTEntry: ({self.key}, {self.value}) -> {self.next}"
+
+    def __str__(self):
+        return f"HTEntry: ({self.key}, {self.value}) -> {self.next}"
+
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
@@ -18,45 +24,23 @@ Max_LF = .7
 class HashTable:
 
     def __init__(self, capacity):
-        self.hash_arr = [None] * capacity
-        self.capacity = capacity
+        self.hash_list = [None] * capacity
+        self.capacity = 8
         self.occupied_slots = 0
+        self.head = None
 
     def get_num_slots(self):
-        """
-        Return the length of the list you're using to hold the hash
-        table data. (Not the number of items stored in the hash table,
-        but the number of slots in the main list.)
-
-        One of the tests relies on this.
-
-        Implement this.
-        """
-        # Your code here
+        # Return length of data-structure
+        return len(self.hash_list)
 
     def get_load_factor(self):
-        """
-        Return the load factor for this hash table.
 
-        Implement this.
-        """
-        # Your code here
-
-    def fnv1(self, key):
-        """
-        FNV-1 Hash, 64-bit
-
-        Implement this, and/or DJB2.
-        """
-
-        # Your code here
+        LF = self.occupied_slots / self.get_num_slots()
+        print(LF, "Current Load Factor")
+        return LF
 
     def djb2(self, key):
-        """
-        DJB2 hash, 32-bit
 
-        Implement this, and/or FNV-1.
-        """
         encoded_str = key.encode()
         hash = 5381
         for x in encoded_str:
@@ -65,18 +49,14 @@ class HashTable:
         return hash & 0xFFFFFFFF
 
     def hash_index(self, key):
-        """
-        Take an arbitrary key and return a valid integer index
-        between within the storage capacity of the hash table.
-        """
 
-        # return self.fnv1(key) % self.capacity
-        return self.djb2(key) % len(self.capacity)
+        return self.djb2(key) % len(self.hash_list)
 
     def put(self, key, value):
         # Array version
-        self.capacity[self.hash_index(key)] = value
+        self.hash_list[self.hash_index(key)] = value
 
+    def insert(self, key, value):
         """
         # Search the linked list for a Node with the same KEY as the one we are inserting
                 # If it exists:
@@ -84,7 +64,7 @@ class HashTable:
                     # return
             # if it doesnt exist do the following steps
 ​
-            # the first item in the hash_array is the HEAD of the linked list
+            # the first item in the hash_list is the HEAD of the linked list
             # Create a new hashTableEntry and add it to the HEAD of the linked list
             # Make the new entry the new HEAD
         """
@@ -92,39 +72,64 @@ class HashTable:
     def delete(self, key):
 
         # Array version
-        if self.capacity[self.hash_index(key)] is None:
+        if self.hash_list[self.hash_index(key)] is None:
             print("key not found")
         else:
-            self.capacity[self.hash_index(key)] = None
+            self.hash_list[self.hash_index(key)] = None
 
         """
-        # Search through the linked list until we find the node to delete 
+        # Search through the linked list until we find the node to delete
         # Delete the node if found
 
         """
 
+    def delNode(self, key):
+        """
+        # Search the linked list for a Node with the same KEY as the one we are inserting
+                # If it exists:
+                    # change the value of the node
+                    # return
+            # if it doesnt exist do the following steps
+​
+            # the first item in the hash_list is the HEAD of the linked list
+            # Create a new hashTableEntry and add it to the HEAD of the linked list
+            # Make the new entry the new HEAD
+        """
+
     def get(self, key):
         # Array version
-        return self.capacity[self.hash_index(key)]
 
-        """
+        return self.hash_list[self.hash_index(key)]
+
+    def findNode(self, key):
+        current_node = key.head
+
+        while current_node is not None:
+            if current_node.key == key:
+                return current_node
+            current_node = current_node.next
+        return None
+
         # Search / Loop through the linked list at the hashed index
         # Compare the key to search to the keys in the nodes
         # if you find it, return the value
         # if not, return None
-        """
 
-    def resize(self, new_capacity):
-        """
-       # Create a blank new array with double the size of the old array
+    def resize(self, new_capacity, new_arr):
+        # Create a blank new array with double the size of the old array
+        self.new_capacity = (self.capacity * 2)
+        new_arr = [None] * self.new_capacity
+
+        for new_key in range(len(self.hash_list)):
+            # self.get(self.key)
+            self.djb2(new_key)
+            self.hash_index(new_key)
+
         # We have to rehash every single item because the hash function has changed
-            # go through each slot in the array
-                # go through each item in each linked list in the array
-                    # rehash the key in each item and store in new array
-​
+        # go through each slot in the array
+        # go through each item in each linked list in the array
+        # rehash the key in each item and store in new array
         # make new array the new storage
-
-        """
 
 
 if __name__ == "__main__":
