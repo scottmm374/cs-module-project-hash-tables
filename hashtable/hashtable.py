@@ -11,18 +11,16 @@ class HashTableEntry:
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
+Min_LF = .2
+Max_LF = .7
 
 
 class HashTable:
-    """
-    A hash table that with `capacity` buckets
-    that accepts string keys
-
-    Implement this.
-    """
 
     def __init__(self, capacity):
-        self.capacity = [None] * 8
+        self.hash_arr = [None] * capacity
+        self.capacity = capacity
+        self.occupied_slots = 0
 
     def get_num_slots(self):
         """
@@ -76,48 +74,57 @@ class HashTable:
         return self.djb2(key) % len(self.capacity)
 
     def put(self, key, value):
-
+        # Array version
         self.capacity[self.hash_index(key)] = value
 
         """
-        Store the value with the given key.
-
-        Hash collisions should be handled with Linked List Chaining.
-
-        Implement this.
+        # Search the linked list for a Node with the same KEY as the one we are inserting
+                # If it exists:
+                    # change the value of the node
+                    # return
+            # if it doesnt exist do the following steps
+​
+            # the first item in the hash_array is the HEAD of the linked list
+            # Create a new hashTableEntry and add it to the HEAD of the linked list
+            # Make the new entry the new HEAD
         """
 
     def delete(self, key):
-        """
-        Remove the value stored with the given key.
 
-        Print a warning if the key is not found.
-
-        Implement this.
-        """
+        # Array version
         if self.capacity[self.hash_index(key)] is None:
             print("key not found")
         else:
             self.capacity[self.hash_index(key)] = None
 
+        """
+        # Search through the linked list until we find the node to delete 
+        # Delete the node if found
+
+        """
+
     def get(self, key):
-        """
-        Retrieve the value stored with the given key.
-
-        Returns None if the key is not found.
-
-        Implement this.
-        """
+        # Array version
         return self.capacity[self.hash_index(key)]
+
+        """
+        # Search / Loop through the linked list at the hashed index
+        # Compare the key to search to the keys in the nodes
+        # if you find it, return the value
+        # if not, return None
+        """
 
     def resize(self, new_capacity):
         """
-        Changes the capacity of the hash table and
-        rehashes all key/value pairs.
+       # Create a blank new array with double the size of the old array
+        # We have to rehash every single item because the hash function has changed
+            # go through each slot in the array
+                # go through each item in each linked list in the array
+                    # rehash the key in each item and store in new array
+​
+        # make new array the new storage
 
-        Implement this.
         """
-        # Your code here
 
 
 if __name__ == "__main__":
