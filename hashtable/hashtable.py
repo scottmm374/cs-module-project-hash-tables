@@ -8,11 +8,11 @@ class HashTableEntry:
         self.value = value
         self.next = None
 
-    def __repr__(self):
-        return f"HTEntry: ({self.key}, {self.value}) -> {self.next}"
+    # def __repr__(self):
+    #     return f"HTEntry: ({self.key}, {self.value}) -> {self.next}"
 
-    def __str__(self):
-        return f"HTEntry: ({self.key}, {self.value}) -> {self.next}"
+    # def __str__(self):
+    #     return f"HTEntry: ({self.key}, {self.value}) -> {self.next}"
 
 
 # Hash table can't have fewer than this many slots
@@ -36,9 +36,10 @@ class HashTable:
 
     def get_load_factor(self):
 
-        LF = self.occupied_slots / self.capacity
-        print(LF, "Current Load Factor")
-        return LF
+        # LF = self.occupied_slots / self.capacity
+        # LF = round(LF, 1)
+        # print(LF, "Current Load Factor, in LF function")
+        return round(self.occupied_slots / self.capacity, 1)
 
     def djb2(self, key):
 
@@ -46,45 +47,52 @@ class HashTable:
         hash = 5381
         for x in encoded_str:
             hash = ((hash << 5) + hash) + x
-            print(hash)
+        # hashed_key = hash & 0xFFFFFFFF
         return hash & 0xFFFFFFFF
 
     def hash_index(self, key):
-
+        # index = self.djb2(key) % len(self.hash_list)
         return self.djb2(key) % len(self.hash_list)
 
     def put(self, key, value):
-
-        new_key = self.hash_list[self.hash_index(key)] = value
-        # Check load Factor first
         loadFactor = self.get_load_factor()
-           if loadFactor > Min_LF and loadFactor < Max_LF:
-                # * If load factor good:
+        print(loadFactor, "current load factor")
+        hash_key = self.djb2(key)
+        print(hash_key, "More hashing in put")
+        key_value = self.hash_list[self.hash_index(key)] = value
+        print(key_value, "should be value I think")
+        index = self.hash_index(key)
+        print(index, "index in put")
 
-                      # check to see if index occupied, can we check id Head is None:
-                          # * if not occupied then insert:
-                          new_key = self.head
-                          return self.put(key, value)
+        self.occupied_slots += 1
+        # Check load Factor first
+        # loadFactor = self.get_load_factor()
+        #    if loadFactor > Min_LF and loadFactor < Max_LF:
+        #         # * If load factor good:
 
-                          # ! If occupied:
-                        #   current.head = key at index.
-                        # new_key insert and = head
-                        # current_head = head.next
+        #               # check to see if index occupied, can we check id Head is None:
+        #                   # * if not occupied then insert:
+        #                   new_key = self.head
+        #                   return self.put(key, value)
 
-            # ! If load Factor not good:
+        # ! If occupied:
+        #   current.head = key at index.
+        # new_key insert and = head
+        # current_head = head.next
 
-            return self.put(key, value)
+        # ! If load Factor not good:
 
+        return key_value
 
     def delete(self, key):
 
-        key_search = self.hash_list[self.hash_index(key)]
+        # key_search = self.hash_list[self.hash_index(key)]
 
         # Search first to see if it exists using index(if its occupied)
 
-            # if index is None:  (check below, it may not check quite like I need to)
-            #     Key not found
-            if self.hash_list[self.hash_index(key)] is None:
+        # if index is None:  (check below, it may not check quite like I need to)
+        #     Key not found
+        if self.hash_list[self.hash_index(key)] is None:
             print("key not found")
 
             # if Index occupied, BUT Key doesnt match:    CAN PROB DO ALL THIS IN FIND()
@@ -94,8 +102,8 @@ class HashTable:
             #         if Found :
             #             value = none (delete)
             #             subtract 1 from occupied slots.
-            # Check load factor, for being too small, if it is too small resize, smaller but min 8 slots.  
-        
+            # Check load factor, for being too small, if it is too small resize, smaller but min 8 slots.
+
         else:
             self.hash_list[self.hash_index(key)] = None
 
@@ -115,9 +123,22 @@ class HashTable:
      """
 
     def get(self, key):
-        # Array version
+        index = self.hash_index(key)
+        hash_key = self.djb2(key)
 
-        return self.hash_list[self.hash_index(key)]
+        if index is not None:
+            # check to see if it matches key_hash.
+            if index == key[index]:
+                print(self.hash_list[self.hash_index(key)], "Found key")
+                return self.hash_list[self.hash_index(key)]
+            #  If is doesnt match, then findNode method for LL
+            else:
+                print(
+                    f" Nothing found here, hashKey: {hash_key}, index: {index}, key {key}")
+                # return self.findNode(key)
+        print("Key not found")
+        return None
+        # return self.hash_list[self.hash_index(key)]
 
     def findNode(self, key):
         current_node = key.head
@@ -153,18 +174,20 @@ class HashTable:
 if __name__ == "__main__":
     ht = HashTable(8)
 
-    ht.put("line_1", "'Twas brillig, and the slithy toves")
+    # ht.put("line_1", "'Twas brillig, and the slithy toves")
     ht.put("line_2", "Did gyre and gimble in the wabe:")
-    ht.put("line_3", "All mimsy were the borogoves,")
-    ht.put("line_4", "And the mome raths outgrabe.")
-    ht.put("line_5", '"Beware the Jabberwock, my son!')
-    ht.put("line_6", "The jaws that bite, the claws that catch!")
-    ht.put("line_7", "Beware the Jubjub bird, and shun")
-    ht.put("line_8", 'The frumious Bandersnatch!"')
-    ht.put("line_9", "He took his vorpal sword in hand;")
-    ht.put("line_10", "Long time the manxome foe he sought--")
-    ht.put("line_11", "So rested he by the Tumtum tree")
-    ht.put("line_12", "And stood awhile in thought.")
+    # ht.put("line_3", "All mimsy were the borogoves,")
+    # ht.put("line_4", "And the mome raths outgrabe.")
+    # ht.put("line_5", '"Beware the Jabberwock, my son!')
+    # ht.get("line_2")
+    ht.get("line_1")
+    # ht.put("line_6", "The jaws that bite, the claws that catch!")
+    # ht.put("line_7", "Beware the Jubjub bird, and shun")
+    # ht.put("line_8", 'The frumious Bandersnatch!"')
+    # ht.put("line_9", "He took his vorpal sword in hand;")
+    # ht.put("line_10", "Long time the manxome foe he sought--")
+    # ht.put("line_11", "So rested he by the Tumtum tree")
+    # ht.put("line_12", "And stood awhile in thought.")
 
     print("")
 
