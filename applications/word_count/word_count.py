@@ -1,6 +1,5 @@
 def word_count(s):
-    dict1 = {k: v for k, v in s}
-    return dict1
+    pass
 
 
 if __name__ == "__main__":
