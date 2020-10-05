@@ -30,7 +30,8 @@ class HashTable:
 
     def get_num_slots(self):
         # Return length of data-structure
-        return len(self.hash_list)
+        #
+        return self.capacity
 
     def get_load_factor(self):
         # return load factor
@@ -116,10 +117,11 @@ class HashTable:
 
     def resize(self, new_capacity):
         # Create a blank new array with double the size of the old array
-        old_list = self.hash_list
+        old_capacity = self.hash_list
         self.__init__(new_capacity)
+        self.capacity = new_capacity
 
-        for node in old_list:
+        for node in old_capacity:
             curr_node = node
             while curr_node is not None:
                 self.put(node.key, node.value)
