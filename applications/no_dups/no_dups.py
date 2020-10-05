@@ -1,6 +1,6 @@
 def no_dups(s):
-    # Your code here
-
+    new_str = s.split()
+    return (" ".join(sorted(set(new_str), key=s.index)))
 
 
 if __name__ == "__main__":
