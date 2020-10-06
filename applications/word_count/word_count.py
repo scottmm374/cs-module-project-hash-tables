@@ -7,7 +7,7 @@ def word_count(s):
     word_dict = {}
     # removes special characters from string
     remove_Special_Chars = s.translate(
-        {ord(c): " " for c in "'\!@  # $%^&*()[]{};:,./\\<>?|`~-=_+"}).lower().split()
+        {ord(c): " " for c in "\"!@  # $%^&*()[]{};:,./\\<>?|`~-=_+"}).lower().split()
 
     for word in remove_Special_Chars:
         words = word
