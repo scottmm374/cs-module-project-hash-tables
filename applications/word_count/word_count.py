@@ -1,22 +1,22 @@
 s = 'Hello, my cat.  And my cat doesn\'t say "hello" back.'
+# s = '":;,.-+=/\\|[]{}()*^&'
 
 
 def word_count(s):
 
-    count = {}
+    word_dict = {}
     # removes special characters from string
     remove_Special_Chars = s.translate(
-        {ord(c): " " for c in "\"!@  # $%^&*()[]{};:,./<>?|`~-=_+"}).split()
+        {ord(c): " " for c in "'\!@  # $%^&*()[]{};:,./\\<>?|`~-=_+"}).lower().split()
 
     for word in remove_Special_Chars:
         words = word
+    # if the string does not exist yet
+        if word not in word_dict:
+            number = remove_Special_Chars.count(word)
+            word_dict[words] = number
 
-        if word not in count:
-            count[words] = [words]
-        else:
-            count[words].append(word)
-
-    return count
+    return word_dict
 
     # if __name__ == "__main__":
     #     print(word_count(""))
