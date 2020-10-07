@@ -1,4 +1,4 @@
-
+import time
 
 with open("robin.txt") as f:
     words = f.read()
@@ -20,5 +20,16 @@ with open("robin.txt") as f:
             histo_dict[words] = number
 
     sorted_dict = sorted(histo_dict.items(), key=lambda x: x[1], reverse=True)
+    # longest = [ele for key in sorted_dict for ele in key]
+    # print(max(longest)
+
     for i in sorted_dict:
-        print(i[0], i[1])
+
+        print(i[0])
+        print(end=" " * 15)
+        print("#" * i[1])
+
+
+start = time.time()
+end = time.time()
+print(f"Calculating too Histo {(end - start):.15f} seconds")
