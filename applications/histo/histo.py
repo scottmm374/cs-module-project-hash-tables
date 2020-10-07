@@ -19,6 +19,6 @@ with open("robin.txt") as f:
             number = remove_Special_Chars.count(word)
             histo_dict[words] = number
 
-    print(histo_dict)
-    # return word_dict
-# hist()
+    sorted_dict = sorted(histo_dict.items(), key=lambda x: x[1], reverse=True)
+    for i in sorted_dict:
+        print(i[0], i[1])
