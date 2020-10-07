@@ -15,15 +15,22 @@ def slowfun_too_slow(x, y):
 
 def slowfun(x, y):
     pass
+    # faster = {}
 
-    # Do not modify below this line!
+    # x = faster[0]
+    # y = faster[1]
+
+    # if not in faster:
+    #     faster[[x][y]] = (x, y)
+
+
 for i in range(50000):
     x = random.randrange(2, 14)
     y = random.randrange(3, 6)
-    print(f'{i}: {x},{y}: {slowfun(x, y)}')
+    print(f'{i}: {x},{y}: {slowfun_too_slow(x, y)}')
+
 
 start = time.time()
-slowfun_too_slow(x, y)
 end = time.time()
 print(f"Calculating too slow took {(end - start):.5f} seconds")
 
