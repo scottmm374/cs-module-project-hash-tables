@@ -10,9 +10,8 @@ with open("robin.txt") as f:
   # removes special characters from string
     remove_Special_Chars = words.translate(
         {ord(c): " " for c in "\"!@  # $%^&*()[]{};:,./\\<>?|`~-=_+"}).lower().split()
+
     max_len = len(max(remove_Special_Chars, key=len))
-    print(max_len)
-    # print(remove_Special_Chars)
 
     for word in remove_Special_Chars:
         words = word
@@ -21,13 +20,10 @@ with open("robin.txt") as f:
         if word not in histo_dict:
             number = remove_Special_Chars.count(word)
             histo_dict[words] = number
-# TODO need to find longest string, add 2 to length for spacng.
 
 
 # TODO Also need to alphabetize if value is the same
 sorted_dict = sorted(histo_dict.items(), key=lambda x: x[1], reverse=True)
-# longest = [ele for key in sorted_dict for ele in key]
-# print(max(longest)
 
 for i in sorted_dict:
     spaces = max_len + 2

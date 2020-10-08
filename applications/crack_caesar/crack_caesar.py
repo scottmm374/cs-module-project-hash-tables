@@ -1,24 +1,26 @@
 import time
-crypt_list = []
+
+
+# crypt_list = []
+
 with open("ciphertext.txt") as f:
-    words = f.read(delimiter=" ")
-    crypt_list.append(words)
+    words = f.read()
+    # crypt_list.append(words)
 
 
-# def hist(words):
+def ceasar(letters):
 
-crypto_dict = {}
+    crypto_dict = {}
 
-# removes special characters from string
+    for char in letters:
+        letter = char
+        # print(char, "characters")
 
-# for word in words:
-#     words = word
-#     crypt_list.append(word)
+        if char not in crypto_dict:
+            number = words.count(char)
+            crypto_dict[letter] = number
 
-# if the string does not exist yet
-# if word not in crypto_dict:
-#     number = list_of_crypt.count(word)
-#     crypto_dict[words] = number
+    return crypto_dict
 
-print(crypt_list)
-# returns ['ID', 'EWKKF', 'WDQSMDU', 'ID', 'JCW', 'JIEW', 'XB', 'XSU,', 'OCWD', 'QXXU',.....]
+
+print(ceasar(words))
