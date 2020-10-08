@@ -4,6 +4,9 @@ import random
 import time
 
 
+faster = {}
+
+
 def slowfun_too_slow(x, y):
     v = math.pow(x, y)
     v = math.factorial(v)
@@ -12,31 +15,30 @@ def slowfun_too_slow(x, y):
 
     return v
 
-# TODO finish this
-
 
 def slowfun(x, y):
-    pass
-    # faster = {}
 
-    # x = faster[0]
-    # y = faster[1]
+    key = (x, y)
+    if key in faster:
+        print("if key in faster:  \n", faster[key])
+        print("<------------------>")
+        return faster[key]
 
-    # if not in faster:
-    #     faster[[x][y]] = (x, y)
+    result = slowfun_too_slow(x, y)
+    faster[key] = result
+
+    return result
 
 
 for i in range(50000):
     x = random.randrange(2, 14)
     y = random.randrange(3, 6)
-    print(f'{i}: {x},{y}: {slowfun_too_slow(x, y)}')
+    print(f'{i}: {x},{y}: {slowfun(x, y)}')
 
+# Time: slowfun_too_slow range (500) 9.5367431640625e-07 seconds
+# Time Slowfun range(500) 1.1920928955078125e-06 seconds
 
+print(faster, "faster")
 start = time.time()
 end = time.time()
-print(f"Calculating too slow took {(end - start):.5f} seconds")
-
-start = time.time()
-# slowfun(x, y, {})
-end = time.time()
-print(f"Calculating slowfun took {(end - start):.5f} seconds")
+print(end-start)
