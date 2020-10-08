@@ -12,6 +12,8 @@ def slowfun_too_slow(x, y):
 
     return v
 
+# TODO finish this
+
 
 def slowfun(x, y):
     pass
